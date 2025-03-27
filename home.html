@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Clothing Store</title>
+    <link rel="stylesheet" href="/static/css/home.css">
+</head>
+<body>
+    <header>
+        <h1>Online Clothing Store</h1>
+        <nav>
+            <div>
+                <a href="/">Home</a>
+                <a href="/cart">Cart</a>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            </div>
+            <div class="user-section">
+                <span class="username">Welcome, {{ session['user_name'] }}</span>
+                <a href="/logout">Logout</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="feature-container">
+            <div class="feature-card">
+                <img src="/static/images/explore.jpg" alt="Explore Now" class="feature-image">
+                <h3>Explore Now</h3>
+                <p>Discover the latest trends and styles in our collection.</p>
+                <a href="{{ url_for('product_list') }}">
+                    <button>Explore Now</button>
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

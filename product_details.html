@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="/static/css/product_details.css">
+</head>
+<body>
+    <header>
+        <h1>Product Details</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/cart">Cart</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="product-container">
+            <img id="product-image" src="" alt="Product Image">
+            <div class="product-info">
+                <h2 id="product-name"></h2>
+                <p id="product-price"></p>
+                <p><strong>Available Sizes:</strong> S, M, L, XL</p>
+                <p><strong>Delivery:</strong> Free delivery within 5-7 days</p>
+                <button id="bargain-btn" onclick="openChat()">Bargain Now</button>
+                <button id="add-to-cart" onclick="addToCart()" style="display: none;">Add to Cart</button>
+                <button id="buy-now" onclick="buyNow()" style="display: none;">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="chatbot-section" id="chatbot-section" style="display: none;">
+            <h3>Bargain Chat</h3>
+            <img src="/static/images/chatbot.jpg" alt="Chatbot Icon" class="chatbot-icon">
+            <div id="chat-log"></div>
+            <input type="text" id="chat-input" placeholder="Enter your offer..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </main>
+
+    <script>
+        // Fetch product details from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const name = urlParams.get('name');
+        const price = parseFloat(urlParams.get('price'));
+        const image = urlParams.get('image');
+
+        document.getElementById("product-name").innerText = name;
+        document.getElementById("product-price").innerText = "Price: ₹" + price;
+        document.getElementById("product-image").src = image;
+
+        let finalPrice = null;
+        let awaitingConfirmation = false;
+
+        function openChat() {
+            document.getElementById("chatbot-section").style.display = "block";
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const chatInput = document.getElementById("chat-input").value.trim();
+            document.getElementById("chat-input").value = "";
+
+            if (!chatInput) {
+                alert("Please enter a message.");
+                return;
+            }
+
+            document.getElementById("chat-log").innerHTML += `<p><strong>You:</strong> ${chatInput}</p>`;
+
+            if (awaitingConfirmation) {
+                handleUserConfirmation(chatInput);
+                return;
+            }
+
+            const offer = parseFloat(chatInput);
+            if (isNaN(offer) || offer <= 0) {
+                alert("Please enter a valid numeric offer.");
+                return;
+            }
+
+            fetch("/bargain", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ product: name, offer: offer, actual_price: price })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("chat-log").innerHTML += `<p><strong>Chatbot:</strong> ${data.message}</p>`;
+
+                if (data.final_price) {
+                    finalPrice = data.final_price;
+                    document.getElementById("chat-log").innerHTML += `<p><strong>Chatbot:</strong> Do you want to add this to your cart? (Yes/No)</p>`;
+                    awaitingConfirmation = true;
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Failed to connect to the server. Please try again.");
+            });
+        }
+
+        function handleUserConfirmation(response) {
+            awaitingConfirmation = false;
+            if (response.toLowerCase() === "yes") {
+                document.getElementById("add-to-cart").style.display = "inline-block";
+                document.getElementById("buy-now").style.display = "inline-block";
+                document.getElementById("chat-log").innerHTML += `<p><strong>Chatbot:</strong> You can now Add to Cart or Buy Now.</p>`;
+            } else {
+                document.getElementById("chat-log").innerHTML += `<p><strong>Chatbot:</strong> Check other products.</p>`;
+            }
+        }
+
+        function addToCart() {
+            if (!finalPrice) {
+                alert("Please finalize the bargain before adding to cart.");
+                return;
+            }
+
+            fetch("/add_to_cart", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ product: name, final_price: finalPrice, image: image })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                window.location.href = "/cart";
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        function buyNow() {
+            fetch("/buy_now", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ product: name, final_price: finalPrice, image: image })
+            }).then(() => window.location.href = "/checkout");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login/Register - Clothing Store</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+          animation: fadeIn 1s ease-in-out;
+      }
+
+      .container {
+          background: white;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+          width: 350px;
+          text-align: center;
+          animation: slideUp 1s ease-in-out;
+      }
+
+      h1 {
+          font-size: 24px;
+          animation: slideDown 1s ease-in-out;
+      }
+
+      .toggle-buttons button {
+          background: #ff758c;
+          color: white;
+          border: none;
+          padding: 10px 15px;
+          cursor: pointer;
+          margin: 5px;
+          transition: transform 0.3s ease;
+      }
+
+      .toggle-buttons button:hover {
+          transform: scale(1.1);
+      }
+
+      form {
+          display: none;
+          animation: fadeInUp 1s ease-in-out;
+      }
+
+      form.active {
+          display: block;
+      }
+
+      input, select {
+          width: 90%;
+          padding: 10px;
+          margin: 10px 0;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          transition: box-shadow 0.3s ease-in-out;
+      }
+
+      input:focus, select:focus {
+          box-shadow: 0 0 8px rgba(255, 117, 140, 0.7);
+      }
+
+      .submit-btn {
+          background: #ff758c;
+          color: white;
+          border: none;
+          padding: 10px 15px;
+          width: 100%;
+          cursor: pointer;
+          transition: background 0.3s ease-in-out;
+      }
+
+      .submit-btn:hover {
+          background: #e84a5f;
+      }
+
+      @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+      }
+
+      @keyframes slideUp {
+          from { transform: translateY(20px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+      }
+
+      @keyframes slideDown {
+          from { transform: translateY(-20px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+      }
+
+      @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+      }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1 id="page-title">Welcome to Fashion Hub</h1>
+  <p id="page-subtitle">Login or Register to continue</p>
+
+  <div class="toggle-buttons">
+      <button id="login-btn" class="active" onclick="toggleForm('login')">Login</button>
+      <button id="register-btn" onclick="toggleForm('register')">Register</button>
+  </div>
+
+  <form id="login-form" class="active" action="/login" method="POST">
+      <input type="email" id="login-email" name="email" placeholder="Enter your email" required>
+      <input type="password" id="login-password" name="password" placeholder="Enter password" required>
+      <button type="submit" class="submit-btn">Login</button>
+      <a href="#" onclick="toggleForm('forgot-password')">Forgot Password?</a>
+  </form>
+
+  <form id="register-form" action="/register" method="POST">
+      <input type="text" id="reg-name" name="name" placeholder="Enter your name" required>
+      <input type="email" id="reg-email" name="email" placeholder="Enter your email" required>
+      <input type="password" id="reg-password" name="password" placeholder="Enter password" required>
+      <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm password" required>
+      <button type="submit" class="submit-btn">Register</button>
+  </form>
+
+  <form id="forgot-password-form" action="/forgot-password" method="POST" style="display: none;">
+      <p>Enter your registered email to reset your password.</p>
+      <input type="email" id="forgot-email" name="email" placeholder="Enter your email" required>
+      <button type="submit" class="submit-btn">Submit</button>
+      <a href="#" onclick="toggleForm('login')">← Back to Login</a>
+  </form>
+
+  <form id="otp-form" style="display: none;">
+      <p>Enter the OTP sent to your registered email</p>
+      <input type="text" id="otp-input" name="otp" placeholder="Enter OTP" required>
+      <button type="submit" class="submit-btn">Verify OTP</button>
+  </form>
+</div>
+
+<script>
+  function toggleForm(formType) {
+      document.getElementById('login-form').style.display = 'none';
+      document.getElementById('register-form').style.display = 'none';
+      document.getElementById('forgot-password-form').style.display = 'none';
+      document.getElementById('otp-form').style.display = 'none';
+      
+      if (formType === 'login') {
+          document.getElementById('login-form').style.display = 'block';
+      } else if (formType === 'register') {
+          document.getElementById('register-form').style.display = 'block';
+      } else if (formType === 'forgot-password') {
+          document.getElementById('forgot-password-form').style.display = 'block';
+      } else if (formType === 'otp') {
+          document.getElementById('otp-form').style.display = 'block';
+      }
+  }
+</script>
+
+</body>
+</html>

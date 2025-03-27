@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="/static/css/cart.css">
+</head>
+<body>
+    <header>
+        <h1>Shopping Cart</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/cart">Cart</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Your Cart</h2>
+        <div class="cart-container">
+            {% for item in cart_items %}
+<div class="cart-item">
+    <img src="{{ item.image }}" alt="{{ item.name }}">
+    <h3>{{ item.name }}</h3>
+    <p>Price: ₹{{ item.price }}</p>
+    <button onclick="removeFromCart('{{ item.name }}')">Remove</button>
+</div>
+{% endfor %}
+<a href="/checkout" class="btn">Proceed to Checkout</a>
+
+<script>
+function removeFromCart(productName) {
+    fetch("/remove_from_cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ product: productName })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        location.reload();
+    })
+    .catch(error => console.error("Error:", error));
+}
+</script>
+
+</body>
+</html>

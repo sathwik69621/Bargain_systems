@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link rel="stylesheet" href="/static/css/product_list.css">
+</head>
+<body>
+    <header>
+        <h1>Product List</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/cart">Cart</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="filters">
+            <button class="filter-btn" onclick="filterProducts('all')">All</button>
+            <button class="filter-btn" onclick="filterProducts('men')">Men</button>
+            <button class="filter-btn" onclick="filterProducts('women')">Women</button>
+            <button class="filter-btn" onclick="filterProducts('kids')">Kids</button>
+        </div>
+        
+        <div class="category">
+            <h2>Men's Clothing</h2>
+            <div class="product-container">
+                <div class="product-card" data-category="men" onclick="viewProduct('Stylish Casual Outfit', 999, '/static/images/men1.jpg')">
+                    <img src="/static/images/men1.jpg" alt="Stylish Casual Outfit">
+                    <h3>Stylish Casual Outfit</h3>
+                    <p>Price: ₹999</p>
+                </div>
+                <div class="product-card" data-category="men" onclick="viewProduct('Trendy Jacket', 1299, '/static/images/men2.jpg')">
+                    <img src="/static/images/men2.jpg" alt="Trendy Jacket">
+                    <h3>Trendy Jacket</h3>
+                    <p>Price: ₹1,299</p>
+                </div>
+                <div class="product-card" data-category="men" onclick="viewProduct('Minimalist T-shirt', 499, '/static/images/men3.jpg')">
+                    <img src="/static/images/men3.jpg" alt="Minimalist T-shirt">
+                    <h3>Minimalist T-shirt</h3>
+                    <p>Price: ₹499</p>
+                </div>
+                <div class="product-card" data-category="men" onclick="viewProduct('Classic Denim Jeans', 1199, '/static/images/men4.jpg')">
+                    <img src="/static/images/men4.jpg" alt="Classic Denim Jeans">
+                    <h3>Classic Denim Jeans</h3>
+                    <p>Price: ₹1,199</p>
+                </div>
+                <div class="product-card" data-category="men" onclick="viewProduct('Modern Hoodie', 1499, '/static/images/men5.jpg')">
+                    <img src="/static/images/men5.jpg" alt="Modern Hoodie">
+                    <h3>Modern Hoodie</h3>
+                    <p>Price: ₹1,499</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2>Women's Clothing</h2>
+            <div class="product-container">
+                <div class="product-card" data-category="women" onclick="viewProduct('Stylish Casual Outfit', 1299, '/static/images/women1.jpg')">
+                    <img src="/static/images/women1.jpg" alt="Stylish Casual Outfit">
+                    <h3>Stylish Casual Outfit</h3>
+                    <p>Price: ₹1,299</p>
+                </div>
+                <div class="product-card" data-category="women" onclick="viewProduct('Elegant Dress', 1599, '/static/images/women2.jpg')">
+                    <img src="/static/images/women2.jpg" alt="Elegant Dress">
+                    <h3>Elegant Dress</h3>
+                    <p>Price: ₹1,599</p>
+                </div>
+                <div class="product-card" data-category="women" onclick="viewProduct('Formal Blazer', 1899, '/static/images/women3.jpg')">
+                    <img src="/static/images/women3.jpg" alt="Formal Blazer">
+                    <h3>Formal Blazer</h3>
+                    <p>Price: ₹1,899</p>
+                </div>
+                <div class="product-card" data-category="women" onclick="viewProduct('Trendy Top', 699, '/static/images/women4.jpg')">
+                    <img src="/static/images/women4.jpg" alt="Trendy Top">
+                    <h3>Trendy Top</h3>
+                    <p>Price: ₹699</p>
+                </div>
+                <div class="product-card" data-category="women" onclick="viewProduct('Ethnic Saree', 2199, '/static/images/women5.jpg')">
+                    <img src="/static/images/women5.jpg" alt="Ethnic Saree">
+                    <h3>Ethnic Saree</h3>
+                    <p>Price: ₹2,199</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2>Kids' Clothing</h2>
+            <div class="product-container">
+                <div class="product-card" data-category="kids" onclick="viewProduct('Playful T-shirt', 399, '/static/images/kids1.jpg')">
+                    <img src="/static/images/kids1.jpg" alt="Playful T-shirt">
+                    <h3>Playful T-shirt</h3>
+                    <p>Price: ₹399</p>
+                </div>
+                <div class="product-card" data-category="kids" onclick="viewProduct('Trendy Hoodie', 899, '/static/images/kids2.jpg')">
+                    <img src="/static/images/kids2.jpg" alt="Trendy Hoodie">
+                    <h3>Trendy Hoodie</h3>
+                    <p>Price: ₹899</p>
+                </div>
+                <div class="product-card" data-category="kids" onclick="viewProduct('Stylish Jacket', 1099, '/static/images/kids3.jpg')">
+                    <img src="/static/images/kids3.jpg" alt="Stylish Jacket">
+                    <h3>Stylish Jacket</h3>
+                    <p>Price: ₹1,099</p>
+                </div>
+                <div class="product-card" data-category="kids" onclick="viewProduct('Cute Frock', 799, '/static/images/kids4.jpg')">
+                    <img src="/static/images/kids4.jpg" alt="Cute Frock">
+                    <h3>Cute Frock</h3>
+                    <p>Price: ₹799</p>
+                </div>
+                <div class="product-card" data-category="kids" onclick="viewProduct('Stylish Jeans', 999, '/static/images/kids5.jpg')">
+                    <img src="/static/images/kids5.jpg" alt="Stylish Jeans">
+                    <h3>Stylish Jeans</h3>
+                    <p>Price: ₹999</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Your HTML content above -->
+
+    <script>
+    function viewProduct(name, price, image) {
+        window.location.href = "/product-details?name=" + encodeURIComponent(name) + 
+                               "&price=" + encodeURIComponent(price) + 
+                               "&image=" + encodeURIComponent(image);
+    }
+</script>
+
+    
+
+</body>
+</html>
